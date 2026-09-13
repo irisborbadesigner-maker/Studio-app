@@ -4,14 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Studio</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#16324E">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Studio">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
 
 .st-app *{box-sizing:border-box;}
 .st-app{
@@ -33,7 +27,7 @@
   overflow:hidden;
   position:relative;
 }
-.st-app h1,.st-app h2,.st-app h3{font-family:'Fraunces',serif;font-weight:500;margin:0;}
+.st-app h1,.st-app h2,.st-app h3{font-family:'Poppins',sans-serif;font-weight:700;margin:0;letter-spacing:-0.01em;}
 .st-content{flex:1;overflow-y:auto;padding:28px 20px 20px;position:relative;z-index:1;}
 .st-content::-webkit-scrollbar{display:none;}
 
@@ -64,9 +58,9 @@
 .st-tab.active{display:block;}
 
 /* shared bits */
-.st-eyebrow{font-size:13px;color:var(--ink-soft);margin-bottom:2px;}
+.st-eyebrow{font-size:13px;color:var(--wine);margin-bottom:4px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;}
 .st-chips{display:flex;gap:8px;overflow-x:auto;padding:14px 0 18px;margin:0 -20px;padding-left:20px;padding-right:20px;}
-.st-chip{flex:0 0 auto;padding:7px 14px;border-radius:100px;border:1px solid var(--line);font-size:13px;background:var(--surface);color:var(--ink-soft);cursor:pointer;white-space:nowrap;}
+.st-chip{flex:0 0 auto;padding:9px 18px;border-radius:100px;border:1.5px solid var(--line);font-size:15px;font-weight:600;background:var(--surface);color:var(--ink-soft);cursor:pointer;white-space:nowrap;}
 .st-chip.on{background:var(--wine);border-color:var(--wine);color:#fff;}
 
 /* GALLERY */
@@ -88,16 +82,16 @@
 .st-svc-row:first-child{padding-top:2px;}
 .st-svc-bar{width:3px;align-self:stretch;background:var(--wine);border-radius:2px;flex-shrink:0;}
 .st-svc-main{flex:1;}
-.st-svc-main h3{font-size:17px;}
-.st-svc-main p{margin:4px 0 0;font-size:13px;color:var(--ink-soft);line-height:1.4;}
-.st-svc-price{font-size:16px;font-weight:600;color:var(--wine-dark);white-space:nowrap;}
+.st-svc-main h3{font-size:20px;font-weight:700;}
+.st-svc-main p{margin:4px 0 0;font-size:14px;color:var(--ink-soft);line-height:1.4;}
+.st-svc-price{font-size:18px;font-weight:700;color:var(--wine-dark);white-space:nowrap;}
 .st-svc-edit input,.st-svc-edit textarea{width:100%;font-family:inherit;border:1px solid var(--line);border-radius:6px;padding:6px 8px;margin-top:4px;background:var(--surface);}
 .st-svc-del{color:var(--ink-soft);font-size:12px;background:none;border:none;padding:6px 0 0;text-align:left;cursor:pointer;text-decoration:underline;}
 .st-addsvc{margin-top:16px;width:100%;padding:12px;border:1px dashed var(--line);border-radius:8px;background:none;color:var(--ink-soft);font-family:inherit;cursor:pointer;}
 
 /* FEEDBACK */
 .st-fb-head{text-align:center;margin:6px 0 22px;}
-.st-fb-head h2{font-size:24px;line-height:1.25;}
+.st-fb-head h2{font-size:30px;line-height:1.2;}
 .st-stars{display:flex;justify-content:center;gap:10px;margin:20px 0;}
 .st-stars svg{width:38px;height:38px;cursor:pointer;color:var(--line);}
 .st-stars svg.on{color:var(--gold);}
@@ -106,7 +100,7 @@
 .st-note textarea{width:100%;border:none;background:none;resize:none;font-family:'Manrope',sans-serif;font-size:14px;padding:10px;min-height:80px;line-height:1.7;}
 .st-note textarea:focus{outline:none;}
 .st-input{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-family:inherit;font-size:14px;background:var(--surface);margin-bottom:14px;}
-.st-submit{width:100%;background:var(--wine);color:#fff;border:none;padding:14px;border-radius:8px;font-family:'Manrope',sans-serif;font-size:15px;font-weight:600;cursor:pointer;}
+.st-submit{width:100%;background:var(--wine);color:#fff;border:none;padding:16px;border-radius:8px;font-family:'Poppins',sans-serif;font-size:16px;font-weight:700;cursor:pointer;letter-spacing:0.01em;}
 .st-thanks{text-align:center;padding:60px 10px;}
 .st-thanks svg{width:52px;height:52px;color:var(--sage);margin-bottom:14px;}
 .st-fb-results{margin-top:24px;border-top:1px solid var(--line);padding-top:16px;}
@@ -115,10 +109,10 @@
 
 /* REVIEW */
 .st-review{text-align:center;padding:20px 6px 10px;}
-.st-review h2{font-size:24px;margin-bottom:8px;}
-.st-review p.sub{color:var(--ink-soft);font-size:14px;margin-bottom:26px;}
+.st-review h2{font-size:30px;margin-bottom:10px;}
+.st-review p.sub{color:var(--ink-soft);font-size:15px;margin-bottom:26px;}
 .st-review .st-submit{margin-bottom:24px;}
-.st-review img.qr{width:170px;height:170px;border-radius:10px;border:1px solid var(--line);background:#fff;padding:8px;}
+.st-review img.qr{max-width:220px;max-height:280px;width:auto;height:auto;object-fit:contain;border-radius:10px;border:1px solid var(--line);background:#fff;padding:8px;}
 .st-review .st-qrlabel{font-size:12px;color:var(--ink-soft);margin-top:10px;}
 .st-linkedit{display:flex;gap:6px;margin-top:20px;}
 .st-linkedit input{flex:1;}
@@ -138,7 +132,7 @@
     <!-- GALERIA -->
     <div class="st-tab active" data-tab="galeria">
       <div class="st-eyebrow">Studio</div>
-      <h1 style="font-size:24px;">Inspirações</h1>
+      <h1 style="font-size:32px;">Inspirações</h1>
       <div class="st-chips" id="galChips"></div>
       <div class="st-grid" id="galGrid"></div>
       <p class="st-hint" id="galHint" style="display:none;">Toque em uma foto vazia para adicionar do rolo de imagens</p>
@@ -172,34 +166,75 @@
       <div class="st-fb-results" id="fbResults" style="display:none;"></div>
     </div>
 
-    <!-- AVALIAÇÃO GOOGLE -->
-    <div class="st-tab" data-tab="google">
+    <!-- PIX -->
+    <div class="st-tab" data-tab="pagamento">
       <div class="st-review">
-        <h2>Studio</h2>
-        <p class="sub">Siga a gente e agende seu próximo horário</p>
-
-        <button class="st-submit" id="instaBtn" style="max-width:280px;">Seguir no Instagram</button>
-        <div class="st-linkedit" id="instaEditRow" style="display:none;max-width:280px;margin-left:auto;margin-right:auto;">
-          <input class="st-input" id="instaInput" style="margin-bottom:0;" placeholder="Cole o link do Instagram">
-          <button id="instaSave">salvar</button>
+        <h2>Pagamento</h2>
+        <p class="sub">Pague com Pix, rapidinho</p>
+        <div>
+          <img class="qr" id="pixQrImg" src="" alt="QR code do Pix" style="display:none;">
+          <p class="st-qrlabel" id="pixQrLabel" style="display:none;">aponte a câmera do banco</p>
         </div>
-
-        <p class="sub" style="margin-top:14px;margin-bottom:8px;">Toque aqui pra marcar seu próximo horário</p>
-        <button class="st-submit" id="agendaBtn" style="max-width:280px;">Agendar meu próximo horário</button>
-        <div class="st-linkedit" id="agendaEditRow" style="display:none;max-width:280px;margin-left:auto;margin-right:auto;">
-          <input class="st-input" id="agendaInput" style="margin-bottom:0;" placeholder="Cole o link de agendamento">
-          <button id="agendaSave">salvar</button>
+        <div id="pixAdmin" style="display:none;">
+          <input type="file" id="pixFileInput" accept="image/*" style="display:none;">
+          <button class="st-submit" id="pixUploadBtn" style="max-width:280px;margin-top:14px;">Escolher foto do QR Code Pix</button>
+          <button class="st-svc-del" id="pixRemoveBtn" style="display:block;margin:10px auto 0;">remover foto do Pix</button>
         </div>
-
         <div style="margin-top:30px;padding-top:24px;border-top:1px solid var(--line);display:none;" id="bgEditBlock">
-          <h3 style="font-size:16px;margin-bottom:10px;">Foto de fundo do app</h3>
+          <h3 style="font-size:18px;margin-bottom:10px;">Foto de fundo do app</h3>
           <input type="file" id="bgFileInput" accept="image/*" style="display:none;">
           <button class="st-submit" id="bgUploadBtn" style="max-width:280px;">Escolher foto</button>
           <button class="st-svc-del" id="bgRemoveBtn" style="display:block;margin:10px auto 0;">remover foto de fundo</button>
         </div>
+      </div>
+    </div>
 
-        <div style="margin-top:30px;padding-top:24px;border-top:1px solid var(--line);">
-          <h2>Adorou o<br>atendimento?</h2>
+    <!-- INSTAGRAM -->
+    <div class="st-tab" data-tab="instagram">
+      <div class="st-review">
+        <h2>Instagram</h2>
+        <p class="sub">Siga a gente pra ver mais trabalhos</p>
+        <img id="instaPhoto" src="" alt="Perfil do Instagram" style="display:none;width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid var(--surface);box-shadow:0 0 0 1px var(--line);margin-bottom:20px;">
+        <div>
+          <img class="qr" id="instaQrImg" src="" alt="QR code do Instagram" style="display:none;">
+          <p class="st-qrlabel" id="instaQrLabel" style="display:none;">ou aponte a câmera do celular</p>
+        </div>
+        <div style="margin-top:16px;">
+          <button class="st-submit" id="instaBtn" style="max-width:280px;">Seguir no Instagram</button>
+        </div>
+        <div class="st-linkedit" id="instaEditRow" style="display:none;max-width:280px;margin-left:auto;margin-right:auto;">
+          <input class="st-input" id="instaInput" style="margin-bottom:0;" placeholder="Cole o link do Instagram">
+          <button id="instaSave">salvar</button>
+        </div>
+        <div id="instaPhotoAdmin" style="display:none;margin-top:14px;">
+          <input type="file" id="instaFileInput" accept="image/*" style="display:none;">
+          <button class="st-submit" id="instaUploadBtn" style="max-width:280px;">Escolher foto de perfil</button>
+          <button class="st-svc-del" id="instaRemoveBtn" style="display:block;margin:10px auto 0;">remover foto de perfil</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- AGENDAMENTO -->
+    <div class="st-tab" data-tab="agendamento">
+      <div class="st-review">
+        <h2>Agendamento</h2>
+        <p class="sub">Aponte a câmera do seu celular pra marcar no seu próprio cadastro</p>
+        <div>
+          <img class="qr" id="agendaQrImg" src="" alt="QR code de agendamento" style="display:none;">
+          <p class="st-qrlabel" id="agendaQrLabel" style="display:none;">escaneie com a câmera do celular</p>
+        </div>
+        <div class="st-linkedit" id="agendaEditRow" style="display:none;max-width:280px;margin-left:auto;margin-right:auto;margin-top:24px;">
+          <input class="st-input" id="agendaInput" style="margin-bottom:0;" placeholder="Cole o link de agendamento">
+          <button id="agendaSave">salvar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- AVALIAÇÃO GOOGLE -->
+    <div class="st-tab" data-tab="google">
+      <div class="st-review">
+        <div style="margin-top:6px;padding-top:0;">
+          <h2>Gostou do<br>atendimento?</h2>
           <p class="sub">Deixar uma avaliação no Google leva 30 segundos<br>e ajuda muito o studio a crescer.</p>
           <button class="st-submit" id="googleBtn" style="max-width:280px;">Avaliar no Google</button>
           <div>
@@ -228,6 +263,18 @@
     <button data-tab="feedback" class="navbtn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 17.3l-5.4 3 1-6-4.6-4.1 6.1-.6L12 3.5l2.9 5.6 6.1.6-4.6 4.1 1 6z"/></svg>
       Avaliar<span class="st-navdot"></span>
+    </button>
+    <button data-tab="pagamento" class="navbtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h4"/></svg>
+      Pix<span class="st-navdot"></span>
+    </button>
+    <button data-tab="instagram" class="navbtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+      Instagram<span class="st-navdot"></span>
+    </button>
+    <button data-tab="agendamento" class="navbtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+      Agenda<span class="st-navdot"></span>
     </button>
     <button data-tab="google" class="navbtn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></svg>
@@ -271,14 +318,15 @@
     document.getElementById('instaEditRow').style.display = adminMode ? 'flex':'none';
     document.getElementById('agendaEditRow').style.display = adminMode ? 'flex':'none';
     document.getElementById('bgEditBlock').style.display = adminMode ? 'block':'none';
+    document.getElementById('pixAdmin').style.display = adminMode ? 'block':'none';
+    document.getElementById('instaPhotoAdmin').style.display = adminMode ? 'block':'none';
     document.getElementById('fbResults').style.display = adminMode ? 'block':'none';
     renderGallery(); renderServices(); renderFeedbackResults();
   });
 
   // ---------- GALLERY ----------
   const CATS = ['Francesinhas','Decoradas','Esmaltações simples','Alongamentos','Formatos','Cutilagem'];
-  const TALL_SLOTS = [1,4,7];
-  let galData = {};
+  let galPhotos = [];
   let activeCat = 'Todas';
 
   function renderChips(){
@@ -293,57 +341,85 @@
     });
   }
 
+  function addPhotoFromFile(file, presetCat){
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      galPhotos.push({ id: Date.now()+Math.random(), img: reader.result, cat: presetCat || '' });
+      sSet('galeria-fotos', galPhotos);
+      renderGallery();
+    };
+    reader.readAsDataURL(file);
+  }
+
   function renderGallery(){
     const grid = document.getElementById('galGrid');
     grid.innerHTML = '';
-    for(let i=0;i<9;i++){
-      const slot = galData[i] || {};
-      if(activeCat!=='Todas' && slot.img && slot.cat!==activeCat) continue;
-      const tile = document.createElement('div');
-      tile.className = 'st-tile' + (TALL_SLOTS.includes(i)?' tall':'');
+    const filtered = activeCat === 'Todas' ? galPhotos : galPhotos.filter(p => p.cat === activeCat);
 
-      if(slot.img){
-        const img = document.createElement('img');
-        img.src = slot.img;
-        img.onclick = ()=>{ if(!adminMode) openLightbox(slot.img); };
-        tile.appendChild(img);
-        if(slot.cat){
-          const tag = document.createElement('div');
-          tag.className = 'st-cat'; tag.textContent = slot.cat;
-          tile.appendChild(tag);
-        }
-        if(adminMode){
-          const sel = document.createElement('select');
-          sel.innerHTML = '<option value="">categoria</option>' + CATS.map(c=>`<option ${slot.cat===c?'selected':''}>${c}</option>`).join('');
-          sel.onclick = e=>e.stopPropagation();
-          sel.onchange = ()=>{ galData[i].cat = sel.value; sSet('galeria-fotos', galData); renderGallery(); };
-          tile.appendChild(sel);
-        }
-      } else {
-        const empty = document.createElement('div');
-        empty.className = 'st-empty';
-        empty.textContent = '+';
-        tile.appendChild(empty);
-        if(adminMode){
-          const input = document.createElement('input');
-          input.type = 'file'; input.accept = 'image/*';
-          input.onchange = (e)=>{
-            const file = e.target.files[0];
-            if(!file) return;
-            const reader = new FileReader();
-            reader.onload = ()=>{
-              galData[i] = { img: reader.result, cat: '' };
-              sSet('galeria-fotos', galData);
-              renderGallery();
-            };
-            reader.readAsDataURL(file);
-          };
-          tile.appendChild(input);
-          tile.onclick = ()=>input.click();
-        }
-      }
-      grid.appendChild(tile);
+    if(adminMode){
+      const addTile = document.createElement('div');
+      addTile.className = 'st-tile';
+      addTile.innerHTML = '<div class="st-empty">+</div>';
+      const input = document.createElement('input');
+      input.type = 'file'; input.accept = 'image/*';
+      input.onchange = (e)=>{
+        const file = e.target.files[0];
+        if(file) addPhotoFromFile(file, activeCat === 'Todas' ? '' : activeCat);
+      };
+      addTile.appendChild(input);
+      addTile.onclick = ()=>input.click();
+      grid.appendChild(addTile);
     }
+
+    filtered.forEach((p, idx)=>{
+      const tile = document.createElement('div');
+      tile.className = 'st-tile' + (idx % 4 === 1 ? ' tall' : '');
+
+      const img = document.createElement('img');
+      img.src = p.img;
+      tile.appendChild(img);
+
+      if(p.cat){
+        const tag = document.createElement('div');
+        tag.className = 'st-cat'; tag.textContent = p.cat;
+        tile.appendChild(tag);
+      }
+
+      if(adminMode){
+        const sel = document.createElement('select');
+        sel.innerHTML = '<option value="">categoria</option>' + CATS.map(c=>`<option ${p.cat===c?'selected':''}>${c}</option>`).join('');
+        sel.onclick = e=>e.stopPropagation();
+        sel.onchange = ()=>{ p.cat = sel.value; sSet('galeria-fotos', galPhotos); renderGallery(); };
+        tile.appendChild(sel);
+
+        const replaceInput = document.createElement('input');
+        replaceInput.type = 'file'; replaceInput.accept = 'image/*';
+        replaceInput.onchange = (e)=>{
+          const file = e.target.files[0];
+          if(!file) return;
+          const reader = new FileReader();
+          reader.onload = ()=>{ p.img = reader.result; sSet('galeria-fotos', galPhotos); renderGallery(); };
+          reader.readAsDataURL(file);
+        };
+        tile.appendChild(replaceInput);
+        img.onclick = ()=> replaceInput.click();
+
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = '×';
+        removeBtn.style.cssText = 'position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;border:none;background:rgba(0,0,0,.55);color:#fff;font-size:14px;line-height:1;cursor:pointer;';
+        removeBtn.onclick = (e)=>{
+          e.stopPropagation();
+          galPhotos = galPhotos.filter(x=>x.id!==p.id);
+          sSet('galeria-fotos', galPhotos);
+          renderGallery();
+        };
+        tile.appendChild(removeBtn);
+      } else {
+        img.onclick = ()=> openLightbox(p.img);
+      }
+
+      grid.appendChild(tile);
+    });
   }
 
   function openLightbox(src){
@@ -505,6 +581,41 @@
     applyBg();
   });
 
+  // ---------- PIX ----------
+  let pixQrPhoto = null;
+
+  function renderPix(){
+    const img = document.getElementById('pixQrImg');
+    const label = document.getElementById('pixQrLabel');
+    if(pixQrPhoto){
+      img.src = pixQrPhoto;
+      img.style.display = 'inline-block';
+      label.style.display = 'block';
+    } else {
+      img.style.display = 'none';
+      label.style.display = 'none';
+    }
+  }
+  document.getElementById('pixUploadBtn').addEventListener('click', ()=>{
+    document.getElementById('pixFileInput').click();
+  });
+  document.getElementById('pixFileInput').addEventListener('change', (e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      pixQrPhoto = reader.result;
+      sSet('pix-qr-foto', pixQrPhoto);
+      renderPix();
+    };
+    reader.readAsDataURL(file);
+  });
+  document.getElementById('pixRemoveBtn').addEventListener('click', ()=>{
+    pixQrPhoto = null;
+    sSet('pix-qr-foto', null);
+    renderPix();
+  });
+
   // ---------- GOOGLE REVIEW / INSTAGRAM / AGENDAMENTO ----------
   let googleLink = 'https://g.page/r/SEU-LINK-AQUI/review';
   let instaLink = 'https://instagram.com/seu-studio';
@@ -515,10 +626,23 @@
     document.getElementById('linkInput').value = googleLink;
     document.getElementById('instaInput').value = instaLink;
     document.getElementById('agendaInput').value = agendaLink;
+    const agendaQr = document.getElementById('agendaQrImg');
+    const agendaLabel = document.getElementById('agendaQrLabel');
+    if(agendaLink){
+      agendaQr.src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(agendaLink);
+      agendaQr.style.display = 'inline-block';
+      agendaLabel.style.display = 'block';
+    }
+    const instaQr = document.getElementById('instaQrImg');
+    const instaLabel = document.getElementById('instaQrLabel');
+    if(instaLink){
+      instaQr.src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(instaLink);
+      instaQr.style.display = 'inline-block';
+      instaLabel.style.display = 'block';
+    }
   }
   document.getElementById('googleBtn').addEventListener('click', ()=> window.open(googleLink, '_blank'));
   document.getElementById('instaBtn').addEventListener('click', ()=> window.open(instaLink, '_blank'));
-  document.getElementById('agendaBtn').addEventListener('click', ()=> window.open(agendaLink, '_blank'));
   document.getElementById('linkSave').addEventListener('click', ()=>{
     googleLink = document.getElementById('linkInput').value.trim() || googleLink;
     sSet('google-review-link', googleLink);
@@ -529,6 +653,33 @@
     sSet('instagram-link', instaLink);
     renderGoogle();
   });
+
+  // ---------- FOTO DO INSTAGRAM ----------
+  let instaPhoto = null;
+  function renderInstaPhoto(){
+    const img = document.getElementById('instaPhoto');
+    if(instaPhoto){ img.src = instaPhoto; img.style.display = 'inline-block'; }
+    else { img.style.display = 'none'; }
+  }
+  document.getElementById('instaUploadBtn').addEventListener('click', ()=>{
+    document.getElementById('instaFileInput').click();
+  });
+  document.getElementById('instaFileInput').addEventListener('change', (e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      instaPhoto = reader.result;
+      sSet('instagram-foto', instaPhoto);
+      renderInstaPhoto();
+    };
+    reader.readAsDataURL(file);
+  });
+  document.getElementById('instaRemoveBtn').addEventListener('click', ()=>{
+    instaPhoto = null;
+    sSet('instagram-foto', null);
+    renderInstaPhoto();
+  });
   document.getElementById('agendaSave').addEventListener('click', ()=>{
     agendaLink = document.getElementById('agendaInput').value.trim() || agendaLink;
     sSet('agendamento-link', agendaLink);
@@ -537,7 +688,7 @@
 
   // ---------- INIT ----------
   (async function init(){
-    galData = await sGet('galeria-fotos', {});
+    galPhotos = await sGet('galeria-fotos', []);
     services = await sGet('servicos-lista', DEFAULT_SERVICES);
     feedbackEntries = await sGet('feedback-respostas', []);
     googleLink = await sGet('google-review-link', googleLink);
@@ -545,6 +696,10 @@
     agendaLink = await sGet('agendamento-link', agendaLink);
     bgPhoto = await sGet('foto-fundo', null);
     applyBg();
+    pixQrPhoto = await sGet('pix-qr-foto', null);
+    renderPix();
+    instaPhoto = await sGet('instagram-foto', null);
+    renderInstaPhoto();
 
     renderChips(); renderGallery();
     renderServices();
