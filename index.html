@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Studio</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#16324E">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Studio">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap');
+
+.st-app *{box-sizing:border-box;}
+.st-app{
+  --bg:#E8EFF4;
+  --surface:#FAFDFF;
+  --ink:#122540;
+  --ink-soft:#5D7488;
+  --wine:#16324E;
+  --wine-dark:#0C1D30;
+  --gold:#8FB4CE;
+  --sage:#2E6E78;
+  --line:rgba(18,37,64,0.13);
+  font-family:'Manrope',sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  height:100dvh;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  position:relative;
+}
+.st-app h1,.st-app h2,.st-app h3{font-family:'Fraunces',serif;font-weight:500;margin:0;}
+.st-content{flex:1;overflow-y:auto;padding:28px 20px 20px;position:relative;z-index:1;}
+.st-content::-webkit-scrollbar{display:none;}
+
+.st-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(6px) brightness(1.02);transform:scale(1.05);z-index:0;}
+.st-bg-overlay{position:absolute;inset:0;background:rgba(232,239,244,.55);z-index:0;}
+
+/* NAV */
+.st-nav{
+  display:flex;align-items:stretch;
+  background:var(--surface);
+  border-top:1px solid var(--line);
+  flex-shrink:0;
+  position:relative;z-index:1;
+}
+.st-nav button{
+  flex:1;background:none;border:none;padding:12px 4px 10px;
+  font-family:'Manrope',sans-serif;font-size:12px;color:var(--ink-soft);
+  display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;
+}
+.st-nav button svg{width:22px;height:22px;}
+.st-nav button.active{color:var(--wine);}
+.st-nav button.active .st-navdot{opacity:1;}
+.st-navdot{width:4px;height:4px;border-radius:50%;background:var(--wine);opacity:0;margin-top:-2px;}
+.st-gear{flex:0 0 40px !important;color:var(--line) !important;opacity:.55;}
+.st-gear.on{color:var(--wine) !important;opacity:1;}
+
+.st-tab{display:none;}
+.st-tab.active{display:block;}
+
+/* shared bits */
+.st-eyebrow{font-size:13px;color:var(--ink-soft);margin-bottom:2px;}
+.st-chips{display:flex;gap:8px;overflow-x:auto;padding:14px 0 18px;margin:0 -20px;padding-left:20px;padding-right:20px;}
+.st-chip{flex:0 0 auto;padding:7px 14px;border-radius:100px;border:1px solid var(--line);font-size:13px;background:var(--surface);color:var(--ink-soft);cursor:pointer;white-space:nowrap;}
+.st-chip.on{background:var(--wine);border-color:var(--wine);color:#fff;}
+
+/* GALLERY */
+.st-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;grid-auto-rows:104px;}
+.st-tile{position:relative;border-radius:6px;overflow:hidden;background:var(--surface);border:1px solid var(--line);}
+.st-tile.tall{grid-row:span 2;}
+.st-tile img{width:100%;height:100%;object-fit:cover;display:block;}
+.st-tile .st-empty{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:26px;font-weight:300;}
+.st-tile .st-cat{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(43,35,32,.55));color:#fff;font-size:10px;padding:4px 6px 3px;}
+.st-tile select{position:absolute;top:4px;left:4px;right:4px;font-size:10px;border-radius:4px;border:none;padding:2px 3px;background:rgba(255,253,249,.92);}
+.st-tile input[type=file]{display:none;}
+
+.st-lightbox{position:fixed;inset:0;background:rgba(20,15,12,.9);display:flex;align-items:center;justify-content:center;z-index:50;}
+.st-lightbox img{max-width:92%;max-height:82%;border-radius:8px;}
+.st-lightbox p{color:#fff;position:absolute;top:22px;right:22px;font-size:26px;cursor:pointer;}
+
+/* SERVICES */
+.st-svc-row{display:flex;gap:12px;padding:16px 0;border-bottom:1px solid var(--line);align-items:baseline;}
+.st-svc-row:first-child{padding-top:2px;}
+.st-svc-bar{width:3px;align-self:stretch;background:var(--wine);border-radius:2px;flex-shrink:0;}
+.st-svc-main{flex:1;}
+.st-svc-main h3{font-size:17px;}
+.st-svc-main p{margin:4px 0 0;font-size:13px;color:var(--ink-soft);line-height:1.4;}
+.st-svc-price{font-size:16px;font-weight:600;color:var(--wine-dark);white-space:nowrap;}
+.st-svc-edit input,.st-svc-edit textarea{width:100%;font-family:inherit;border:1px solid var(--line);border-radius:6px;padding:6px 8px;margin-top:4px;background:var(--surface);}
+.st-svc-del{color:var(--ink-soft);font-size:12px;background:none;border:none;padding:6px 0 0;text-align:left;cursor:pointer;text-decoration:underline;}
+.st-addsvc{margin-top:16px;width:100%;padding:12px;border:1px dashed var(--line);border-radius:8px;background:none;color:var(--ink-soft);font-family:inherit;cursor:pointer;}
+
+/* FEEDBACK */
+.st-fb-head{text-align:center;margin:6px 0 22px;}
+.st-fb-head h2{font-size:24px;line-height:1.25;}
+.st-stars{display:flex;justify-content:center;gap:10px;margin:20px 0;}
+.st-stars svg{width:38px;height:38px;cursor:pointer;color:var(--line);}
+.st-stars svg.on{color:var(--gold);}
+.st-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:18px;}
+.st-note{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:4px;margin-bottom:14px;}
+.st-note textarea{width:100%;border:none;background:none;resize:none;font-family:'Manrope',sans-serif;font-size:14px;padding:10px;min-height:80px;line-height:1.7;}
+.st-note textarea:focus{outline:none;}
+.st-input{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-family:inherit;font-size:14px;background:var(--surface);margin-bottom:14px;}
+.st-submit{width:100%;background:var(--wine);color:#fff;border:none;padding:14px;border-radius:8px;font-family:'Manrope',sans-serif;font-size:15px;font-weight:600;cursor:pointer;}
+.st-thanks{text-align:center;padding:60px 10px;}
+.st-thanks svg{width:52px;height:52px;color:var(--sage);margin-bottom:14px;}
+.st-fb-results{margin-top:24px;border-top:1px solid var(--line);padding-top:16px;}
+.st-fb-entry{padding:10px 0;border-bottom:1px solid var(--line);font-size:13px;}
+.st-fb-entry .st-fe-top{display:flex;justify-content:space-between;color:var(--ink-soft);margin-bottom:3px;}
+
+/* REVIEW */
+.st-review{text-align:center;padding:20px 6px 10px;}
+.st-review h2{font-size:24px;margin-bottom:8px;}
+.st-review p.sub{color:var(--ink-soft);font-size:14px;margin-bottom:26px;}
+.st-review .st-submit{margin-bottom:24px;}
+.st-review img.qr{width:170px;height:170px;border-radius:10px;border:1px solid var(--line);background:#fff;padding:8px;}
+.st-review .st-qrlabel{font-size:12px;color:var(--ink-soft);margin-top:10px;}
+.st-linkedit{display:flex;gap:6px;margin-top:20px;}
+.st-linkedit input{flex:1;}
+.st-linkedit button{background:var(--wine);color:#fff;border:none;border-radius:6px;padding:0 12px;font-size:13px;}
+
+.st-hint{font-size:11px;color:var(--ink-soft);text-align:center;margin-top:10px;}
+</style>
+</head>
+<body style="margin:0;">
+
+<div class="st-app" id="stApp">
+  <div class="st-bg" id="stBg"></div>
+  <div class="st-bg-overlay"></div>
+
+  <div class="st-content">
+
+    <!-- GALERIA -->
+    <div class="st-tab active" data-tab="galeria">
+      <div class="st-eyebrow">Studio</div>
+      <h1 style="font-size:24px;">Inspirações</h1>
+      <div class="st-chips" id="galChips"></div>
+      <div class="st-grid" id="galGrid"></div>
+      <p class="st-hint" id="galHint" style="display:none;">Toque em uma foto vazia para adicionar do rolo de imagens</p>
+    </div>
+
+    <!-- SERVIÇOS -->
+    <div class="st-tab" data-tab="servicos">
+      <div class="st-eyebrow">Studio</div>
+      <h1 style="font-size:24px;">Serviços e preços</h1>
+      <div id="svcList" style="margin-top:6px;"></div>
+      <button class="st-addsvc" id="addSvcBtn" style="display:none;">+ adicionar serviço</button>
+    </div>
+
+    <!-- FEEDBACK -->
+    <div class="st-tab" data-tab="feedback">
+      <div id="fbForm">
+        <div class="st-fb-head">
+          <h2>Como foi sua<br>experiência hoje?</h2>
+        </div>
+        <div class="st-stars" id="fbStars"></div>
+        <div class="st-tags" id="fbTags"></div>
+        <div class="st-note"><textarea id="fbComment" placeholder="Conte um pouco (opcional)"></textarea></div>
+        <input class="st-input" id="fbName" placeholder="Seu nome (opcional)">
+        <button class="st-submit" id="fbSubmit">Enviar avaliação</button>
+      </div>
+      <div id="fbThanks" class="st-thanks" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        <h2 style="font-size:20px;">Obrigada pelo carinho!</h2>
+        <p style="color:var(--ink-soft);font-size:14px;margin-top:6px;">Sua opinião ajuda demais o studio a melhorar.</p>
+      </div>
+      <div class="st-fb-results" id="fbResults" style="display:none;"></div>
+    </div>
+
+    <!-- AVALIAÇÃO GOOGLE -->
+    <div class="st-tab" data-tab="google">
+      <div class="st-review">
+        <h2>Studio</h2>
+        <p class="sub">Siga a gente e agende seu próximo horário</p>
+
+        <button class="st-submit" id="instaBtn" style="max-width:280px;">Seguir no Instagram</button>
+        <div class="st-linkedit" id="instaEditRow" style="display:none;max-width:280px;margin-left:auto;margin-right:auto;">
+          <input class="st-input" id="instaInput" style="margin-bottom:0;" placeholder="Cole o link do Instagram">
+          <button id="instaSave">salvar</button>
+        </div>
+
+        <p class="sub" style="margin-top:14px;margin-bottom:8px;">Toque aqui pra marcar seu próximo horário</p>
+        <button class="st-submit" id="agendaBtn" style="max-width:280px;">Agendar meu próximo horário</button>
+        <div class="st-linkedit" id="agendaEditRow" style="display:none;max-width:280px;margin-left:auto;margin-right:auto;">
+          <input class="st-input" id="agendaInput" style="margin-bottom:0;" placeholder="Cole o link de agendamento">
+          <button id="agendaSave">salvar</button>
+        </div>
+
+        <div style="margin-top:30px;padding-top:24px;border-top:1px solid var(--line);display:none;" id="bgEditBlock">
+          <h3 style="font-size:16px;margin-bottom:10px;">Foto de fundo do app</h3>
+          <input type="file" id="bgFileInput" accept="image/*" style="display:none;">
+          <button class="st-submit" id="bgUploadBtn" style="max-width:280px;">Escolher foto</button>
+          <button class="st-svc-del" id="bgRemoveBtn" style="display:block;margin:10px auto 0;">remover foto de fundo</button>
+        </div>
+
+        <div style="margin-top:30px;padding-top:24px;border-top:1px solid var(--line);">
+          <h2>Adorou o<br>atendimento?</h2>
+          <p class="sub">Deixar uma avaliação no Google leva 30 segundos<br>e ajuda muito o studio a crescer.</p>
+          <button class="st-submit" id="googleBtn" style="max-width:280px;">Avaliar no Google</button>
+          <div>
+            <img class="qr" id="qrImg" src="" alt="QR code para avaliação">
+            <p class="st-qrlabel">ou aponte a câmera do celular</p>
+          </div>
+          <div class="st-linkedit" id="linkEditRow" style="display:none;max-width:280px;margin-left:auto;margin-right:auto;">
+            <input class="st-input" id="linkInput" style="margin-bottom:0;" placeholder="Cole aqui o link da sua avaliação Google">
+            <button id="linkSave">salvar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="st-nav">
+    <button data-tab="galeria" class="navbtn active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      Inspiração<span class="st-navdot"></span>
+    </button>
+    <button data-tab="servicos" class="navbtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16v4H4zM4 12h10M4 16h7"/></svg>
+      Serviços<span class="st-navdot"></span>
+    </button>
+    <button data-tab="feedback" class="navbtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 17.3l-5.4 3 1-6-4.6-4.1 6.1-.6L12 3.5l2.9 5.6 6.1.6-4.6 4.1 1 6z"/></svg>
+      Avaliar<span class="st-navdot"></span>
+    </button>
+    <button data-tab="google" class="navbtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></svg>
+      Google<span class="st-navdot"></span>
+    </button>
+    <button class="st-gear" id="gearBtn" title="modo edição">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09a1.65 1.65 0 00-1.08-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9.6a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9c.36.36.86.99 1.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const app = document.getElementById('stApp');
+  let adminMode = false;
+
+  // ---------- storage helpers ----------
+  async function sGet(key, fallback){
+    try{ const raw = localStorage.getItem('st-'+key); return raw !== null ? JSON.parse(raw) : fallback; }
+    catch(e){ return fallback; }
+  }
+  async function sSet(key, value){
+    try{ localStorage.setItem('st-'+key, JSON.stringify(value)); }catch(e){ console.error('storage set failed', e); }
+  }
+
+  // ---------- nav ----------
+  const navBtns = app.querySelectorAll('.navbtn');
+  navBtns.forEach(b=>b.addEventListener('click',()=>{
+    navBtns.forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    app.querySelectorAll('.st-tab').forEach(t=>t.classList.remove('active'));
+    app.querySelector('.st-tab[data-tab="'+b.dataset.tab+'"]').classList.add('active');
+  }));
+
+  document.getElementById('gearBtn').addEventListener('click', ()=>{
+    adminMode = !adminMode;
+    document.getElementById('gearBtn').classList.toggle('on', adminMode);
+    document.getElementById('galHint').style.display = adminMode ? 'block':'none';
+    document.getElementById('addSvcBtn').style.display = adminMode ? 'block':'none';
+    document.getElementById('linkEditRow').style.display = adminMode ? 'flex':'none';
+    document.getElementById('instaEditRow').style.display = adminMode ? 'flex':'none';
+    document.getElementById('agendaEditRow').style.display = adminMode ? 'flex':'none';
+    document.getElementById('bgEditBlock').style.display = adminMode ? 'block':'none';
+    document.getElementById('fbResults').style.display = adminMode ? 'block':'none';
+    renderGallery(); renderServices(); renderFeedbackResults();
+  });
+
+  // ---------- GALLERY ----------
+  const CATS = ['Francesinhas','Decoradas','Esmaltações simples','Alongamentos','Formatos','Cutilagem'];
+  const TALL_SLOTS = [1,4,7];
+  let galData = {};
+  let activeCat = 'Todas';
+
+  function renderChips(){
+    const wrap = document.getElementById('galChips');
+    wrap.innerHTML = '';
+    ['Todas', ...CATS].forEach(c=>{
+      const chip = document.createElement('div');
+      chip.className = 'st-chip' + (c===activeCat?' on':'');
+      chip.textContent = c;
+      chip.onclick = ()=>{ activeCat = c; renderChips(); renderGallery(); };
+      wrap.appendChild(chip);
+    });
+  }
+
+  function renderGallery(){
+    const grid = document.getElementById('galGrid');
+    grid.innerHTML = '';
+    for(let i=0;i<9;i++){
+      const slot = galData[i] || {};
+      if(activeCat!=='Todas' && slot.img && slot.cat!==activeCat) continue;
+      const tile = document.createElement('div');
+      tile.className = 'st-tile' + (TALL_SLOTS.includes(i)?' tall':'');
+
+      if(slot.img){
+        const img = document.createElement('img');
+        img.src = slot.img;
+        img.onclick = ()=>{ if(!adminMode) openLightbox(slot.img); };
+        tile.appendChild(img);
+        if(slot.cat){
+          const tag = document.createElement('div');
+          tag.className = 'st-cat'; tag.textContent = slot.cat;
+          tile.appendChild(tag);
+        }
+        if(adminMode){
+          const sel = document.createElement('select');
+          sel.innerHTML = '<option value="">categoria</option>' + CATS.map(c=>`<option ${slot.cat===c?'selected':''}>${c}</option>`).join('');
+          sel.onclick = e=>e.stopPropagation();
+          sel.onchange = ()=>{ galData[i].cat = sel.value; sSet('galeria-fotos', galData); renderGallery(); };
+          tile.appendChild(sel);
+        }
+      } else {
+        const empty = document.createElement('div');
+        empty.className = 'st-empty';
+        empty.textContent = '+';
+        tile.appendChild(empty);
+        if(adminMode){
+          const input = document.createElement('input');
+          input.type = 'file'; input.accept = 'image/*';
+          input.onchange = (e)=>{
+            const file = e.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = ()=>{
+              galData[i] = { img: reader.result, cat: '' };
+              sSet('galeria-fotos', galData);
+              renderGallery();
+            };
+            reader.readAsDataURL(file);
+          };
+          tile.appendChild(input);
+          tile.onclick = ()=>input.click();
+        }
+      }
+      grid.appendChild(tile);
+    }
+  }
+
+  function openLightbox(src){
+    const box = document.createElement('div');
+    box.className = 'st-lightbox';
+    box.innerHTML = `<p>&times;</p><img src="${src}">`;
+    box.onclick = ()=>box.remove();
+    app.appendChild(box);
+  }
+
+  // ---------- SERVICES ----------
+  const DEFAULT_SERVICES = [
+    {id:1, nome:'Manicure simples', preco:'R$ 35', desc:'Cutilagem, lixamento e esmaltação tradicional'},
+    {id:2, nome:'Esmaltação em gel', preco:'R$ 60', desc:'Acabamento espelhado e alta duração'},
+    {id:3, nome:'Alongamento em fibra', preco:'R$ 120', desc:'No tamanho e formato que você quiser'},
+    {id:4, nome:'Nail art personalizada', preco:'a partir de R$ 15', desc:'Desenhos exclusivos feitos à mão, por unha'},
+    {id:5, nome:'Spa dos pés', preco:'R$ 50', desc:'Esfoliação, hidratação e esmaltação'},
+  ];
+  let services = [];
+
+  function renderServices(){
+    const list = document.getElementById('svcList');
+    list.innerHTML = '';
+    services.forEach(s=>{
+      const row = document.createElement('div');
+      row.className = 'st-svc-row';
+      if(adminMode){
+        row.innerHTML = `
+          <div class="st-svc-bar"></div>
+          <div class="st-svc-main st-svc-edit">
+            <input data-f="nome" value="${s.nome}">
+            <input data-f="desc" value="${s.desc}">
+            <button class="st-svc-del">remover</button>
+          </div>
+          <input data-f="preco" value="${s.preco}" style="width:110px;text-align:right;">
+        `;
+        row.querySelector('[data-f="nome"]').oninput = e=>{ s.nome=e.target.value; sSet('servicos-lista', services); };
+        row.querySelector('[data-f="desc"]').oninput = e=>{ s.desc=e.target.value; sSet('servicos-lista', services); };
+        row.querySelector('[data-f="preco"]').oninput = e=>{ s.preco=e.target.value; sSet('servicos-lista', services); };
+        row.querySelector('.st-svc-del').onclick = ()=>{
+          services = services.filter(x=>x.id!==s.id);
+          sSet('servicos-lista', services); renderServices();
+        };
+      } else {
+        row.innerHTML = `
+          <div class="st-svc-bar"></div>
+          <div class="st-svc-main"><h3>${s.nome}</h3><p>${s.desc}</p></div>
+          <div class="st-svc-price">${s.preco}</div>
+        `;
+      }
+      list.appendChild(row);
+    });
+  }
+
+  document.getElementById('addSvcBtn').addEventListener('click', ()=>{
+    services.push({id: Date.now(), nome:'Novo serviço', preco:'R$ 0', desc:'Descrição do serviço'});
+    sSet('servicos-lista', services); renderServices();
+  });
+
+  // ---------- FEEDBACK ----------
+  const FB_TAGS = ['Atendimento','Resultado','Ambiente','Pontualidade'];
+  let fbStarsValue = 0;
+  let fbTagsSelected = [];
+  let feedbackEntries = [];
+
+  function renderStars(){
+    const wrap = document.getElementById('fbStars');
+    wrap.innerHTML = '';
+    for(let i=1;i<=5;i++){
+      const s = document.createElementNS('http://www.w3.org/2000/svg','svg');
+      s.setAttribute('viewBox','0 0 24 24');
+      s.setAttribute('fill', i<=fbStarsValue ? 'currentColor':'none');
+      s.setAttribute('stroke','currentColor');
+      s.setAttribute('stroke-width','1.5');
+      s.classList.toggle('on', i<=fbStarsValue);
+      s.innerHTML = '<path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8l-5.8 3.1 1.1-6.5L2.6 9.8l6.5-.9z"/>';
+      s.onclick = ()=>{ fbStarsValue = i; renderStars(); };
+      wrap.appendChild(s);
+    }
+  }
+
+  function renderFbTags(){
+    const wrap = document.getElementById('fbTags');
+    wrap.innerHTML = '';
+    FB_TAGS.forEach(t=>{
+      const chip = document.createElement('div');
+      chip.className = 'st-chip' + (fbTagsSelected.includes(t)?' on':'');
+      chip.textContent = t;
+      chip.onclick = ()=>{
+        fbTagsSelected = fbTagsSelected.includes(t) ? fbTagsSelected.filter(x=>x!==t) : [...fbTagsSelected, t];
+        renderFbTags();
+      };
+      wrap.appendChild(chip);
+    });
+  }
+
+  document.getElementById('fbSubmit').addEventListener('click', async ()=>{
+    if(fbStarsValue===0) return;
+    const entry = {
+      id: Date.now(),
+      estrelas: fbStarsValue,
+      tags: fbTagsSelected,
+      comentario: document.getElementById('fbComment').value,
+      nome: document.getElementById('fbName').value,
+      data: new Date().toLocaleDateString('pt-BR')
+    };
+    feedbackEntries.unshift(entry);
+    await sSet('feedback-respostas', feedbackEntries);
+    document.getElementById('fbForm').style.display = 'none';
+    document.getElementById('fbThanks').style.display = 'block';
+    renderFeedbackResults();
+    setTimeout(()=>{
+      fbStarsValue = 0; fbTagsSelected = [];
+      document.getElementById('fbComment').value=''; document.getElementById('fbName').value='';
+      renderStars(); renderFbTags();
+      document.getElementById('fbForm').style.display = 'block';
+      document.getElementById('fbThanks').style.display = 'none';
+    }, 4000);
+  });
+
+  function renderFeedbackResults(){
+    const box = document.getElementById('fbResults');
+    if(!adminMode){ box.style.display='none'; return; }
+    box.style.display = 'block';
+    const avg = feedbackEntries.length ? (feedbackEntries.reduce((a,e)=>a+e.estrelas,0)/feedbackEntries.length).toFixed(1) : '—';
+    box.innerHTML = `<h3 style="font-size:16px;margin-bottom:10px;">Média: ${avg} ★ (${feedbackEntries.length} respostas)</h3>`;
+    feedbackEntries.slice(0,15).forEach(e=>{
+      const div = document.createElement('div');
+      div.className = 'st-fb-entry';
+      div.innerHTML = `<div class="st-fe-top"><span>${'★'.repeat(e.estrelas)}${'☆'.repeat(5-e.estrelas)} ${e.nome?'· '+e.nome:''}</span><span>${e.data}</span></div>${e.comentario||''}`;
+      box.appendChild(div);
+    });
+  }
+
+  // ---------- FOTO DE FUNDO ----------
+  let bgPhoto = null;
+
+  function applyBg(){
+    const bg = document.getElementById('stBg');
+    bg.style.backgroundImage = bgPhoto ? `url(${bgPhoto})` : 'none';
+  }
+  document.getElementById('bgUploadBtn').addEventListener('click', ()=>{
+    document.getElementById('bgFileInput').click();
+  });
+  document.getElementById('bgFileInput').addEventListener('change', (e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      bgPhoto = reader.result;
+      sSet('foto-fundo', bgPhoto);
+      applyBg();
+    };
+    reader.readAsDataURL(file);
+  });
+  document.getElementById('bgRemoveBtn').addEventListener('click', ()=>{
+    bgPhoto = null;
+    sSet('foto-fundo', null);
+    applyBg();
+  });
+
+  // ---------- GOOGLE REVIEW / INSTAGRAM / AGENDAMENTO ----------
+  let googleLink = 'https://g.page/r/SEU-LINK-AQUI/review';
+  let instaLink = 'https://instagram.com/seu-studio';
+  let agendaLink = 'https://cole-aqui-seu-link-de-agendamento.com';
+
+  function renderGoogle(){
+    document.getElementById('qrImg').src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(googleLink);
+    document.getElementById('linkInput').value = googleLink;
+    document.getElementById('instaInput').value = instaLink;
+    document.getElementById('agendaInput').value = agendaLink;
+  }
+  document.getElementById('googleBtn').addEventListener('click', ()=> window.open(googleLink, '_blank'));
+  document.getElementById('instaBtn').addEventListener('click', ()=> window.open(instaLink, '_blank'));
+  document.getElementById('agendaBtn').addEventListener('click', ()=> window.open(agendaLink, '_blank'));
+  document.getElementById('linkSave').addEventListener('click', ()=>{
+    googleLink = document.getElementById('linkInput').value.trim() || googleLink;
+    sSet('google-review-link', googleLink);
+    renderGoogle();
+  });
+  document.getElementById('instaSave').addEventListener('click', ()=>{
+    instaLink = document.getElementById('instaInput').value.trim() || instaLink;
+    sSet('instagram-link', instaLink);
+    renderGoogle();
+  });
+  document.getElementById('agendaSave').addEventListener('click', ()=>{
+    agendaLink = document.getElementById('agendaInput').value.trim() || agendaLink;
+    sSet('agendamento-link', agendaLink);
+    renderGoogle();
+  });
+
+  // ---------- INIT ----------
+  (async function init(){
+    galData = await sGet('galeria-fotos', {});
+    services = await sGet('servicos-lista', DEFAULT_SERVICES);
+    feedbackEntries = await sGet('feedback-respostas', []);
+    googleLink = await sGet('google-review-link', googleLink);
+    instaLink = await sGet('instagram-link', instaLink);
+    agendaLink = await sGet('agendamento-link', agendaLink);
+    bgPhoto = await sGet('foto-fundo', null);
+    applyBg();
+
+    renderChips(); renderGallery();
+    renderServices();
+    renderStars(); renderFbTags(); renderFeedbackResults();
+    renderGoogle();
+  })();
+
+})();
+</script>
+</body>
+</html>
