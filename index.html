@@ -205,19 +205,17 @@
         <img id="instaPhoto" src="" alt="Perfil do Instagram" style="display:none;width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid var(--surface);box-shadow:0 0 0 1px var(--line);margin-bottom:20px;">
         <div>
           <img class="qr" id="instaQrImg" src="" alt="QR code do Instagram" style="display:none;">
-          <p class="st-qrlabel" id="instaQrLabel" style="display:none;">ou aponte a câmera do celular</p>
+          <p class="st-qrlabel" id="instaQrLabel" style="display:none;">aponte a câmera do celular</p>
         </div>
-        <div style="margin-top:16px;">
-          <button class="st-submit" id="instaBtn" style="max-width:280px;">Seguir no Instagram</button>
-        </div>
-        <div class="st-linkedit" id="instaEditRow" style="display:none;max-width:280px;margin-left:auto;margin-right:auto;">
-          <input class="st-input" id="instaInput" style="margin-bottom:0;" placeholder="Cole o link do Instagram">
-          <button id="instaSave">salvar</button>
-        </div>
-        <div id="instaPhotoAdmin" style="display:none;margin-top:14px;">
+        <div id="instaPhotoAdmin" style="display:none;margin-top:16px;">
           <input type="file" id="instaFileInput" accept="image/*" style="display:none;">
           <button class="st-submit" id="instaUploadBtn" style="max-width:280px;">Escolher foto de perfil</button>
           <button class="st-svc-del" id="instaRemoveBtn" style="display:block;margin:10px auto 0;">remover foto de perfil</button>
+        </div>
+        <div id="instaQrAdmin" style="display:none;margin-top:14px;">
+          <input type="file" id="instaQrFileInput" accept="image/*" style="display:none;">
+          <button class="st-submit" id="instaQrUploadBtn" style="max-width:280px;">Escolher foto do QR Code</button>
+          <button class="st-svc-del" id="instaQrRemoveBtn" style="display:block;margin:10px auto 0;">remover foto do QR</button>
         </div>
       </div>
     </div>
@@ -231,9 +229,10 @@
           <img class="qr" id="agendaQrImg" src="" alt="QR code de agendamento" style="display:none;">
           <p class="st-qrlabel" id="agendaQrLabel" style="display:none;">escaneie com a câmera do celular</p>
         </div>
-        <div class="st-linkedit" id="agendaEditRow" style="display:none;max-width:280px;margin-left:auto;margin-right:auto;margin-top:24px;">
-          <input class="st-input" id="agendaInput" style="margin-bottom:0;" placeholder="Cole o link de agendamento">
-          <button id="agendaSave">salvar</button>
+        <div id="agendaAdmin" style="display:none;margin-top:16px;">
+          <input type="file" id="agendaFileInput" accept="image/*" style="display:none;">
+          <button class="st-submit" id="agendaUploadBtn" style="max-width:280px;">Escolher foto do QR Code</button>
+          <button class="st-svc-del" id="agendaRemoveBtn" style="display:block;margin:10px auto 0;">remover foto do QR</button>
         </div>
       </div>
     </div>
@@ -244,14 +243,14 @@
         <div style="margin-top:6px;padding-top:0;">
           <h2>Gostou do<br>atendimento?</h2>
           <p class="sub">Deixar uma avaliação no Google leva 30 segundos<br>e ajuda muito o studio a crescer.</p>
-          <button class="st-submit" id="googleBtn" style="max-width:280px;">Avaliar no Google</button>
           <div>
-            <img class="qr" id="qrImg" src="" alt="QR code para avaliação">
-            <p class="st-qrlabel">ou aponte a câmera do celular</p>
+            <img class="qr" id="googleQrImg" src="" alt="QR code para avaliação" style="display:none;">
+            <p class="st-qrlabel" id="googleQrLabel" style="display:none;">aponte a câmera do celular</p>
           </div>
-          <div class="st-linkedit" id="linkEditRow" style="display:none;max-width:280px;margin-left:auto;margin-right:auto;">
-            <input class="st-input" id="linkInput" style="margin-bottom:0;" placeholder="Cole aqui o link da sua avaliação Google">
-            <button id="linkSave">salvar</button>
+          <div id="googleAdmin" style="display:none;margin-top:16px;">
+            <input type="file" id="googleFileInput" accept="image/*" style="display:none;">
+            <button class="st-submit" id="googleUploadBtn" style="max-width:280px;">Escolher foto do QR Code</button>
+            <button class="st-svc-del" id="googleRemoveBtn" style="display:block;margin:10px auto 0;">remover foto do QR</button>
           </div>
         </div>
       </div>
@@ -348,12 +347,12 @@
     document.getElementById('gearBtn').classList.toggle('on', adminMode);
     document.getElementById('galHint').style.display = adminMode ? 'block':'none';
     document.getElementById('addSvcBtn').style.display = adminMode ? 'block':'none';
-    document.getElementById('linkEditRow').style.display = adminMode ? 'flex':'none';
-    document.getElementById('instaEditRow').style.display = adminMode ? 'flex':'none';
-    document.getElementById('agendaEditRow').style.display = adminMode ? 'flex':'none';
     document.getElementById('bgEditBlock').style.display = adminMode ? 'block':'none';
     document.getElementById('pixAdmin').style.display = adminMode ? 'block':'none';
     document.getElementById('instaPhotoAdmin').style.display = adminMode ? 'block':'none';
+    document.getElementById('instaQrAdmin').style.display = adminMode ? 'block':'none';
+    document.getElementById('googleAdmin').style.display = adminMode ? 'block':'none';
+    document.getElementById('agendaAdmin').style.display = adminMode ? 'block':'none';
     document.getElementById('fbResults').style.display = adminMode ? 'block':'none';
     renderGallery(); renderServices(); renderFeedbackResults();
   });
@@ -644,44 +643,51 @@
     renderPix();
   });
 
-  // ---------- GOOGLE REVIEW / INSTAGRAM / AGENDAMENTO ----------
-  let googleLink = 'https://g.page/r/SEU-LINK-AQUI/review';
-  let instaLink = 'https://instagram.com/seu-studio';
-  let agendaLink = 'https://cole-aqui-seu-link-de-agendamento.com';
+  // ---------- GOOGLE / INSTAGRAM / AGENDA — QR CODES POR FOTO ----------
+  let googleQrPhoto = null, instaQrPhoto = null, agendaQrPhoto = null;
 
   function renderGoogle(){
-    document.getElementById('qrImg').src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(googleLink);
-    document.getElementById('linkInput').value = googleLink;
-    document.getElementById('instaInput').value = instaLink;
-    document.getElementById('agendaInput').value = agendaLink;
+    const img = document.getElementById('googleQrImg');
+    const label = document.getElementById('googleQrLabel');
+    if(googleQrPhoto){ img.src = googleQrPhoto; img.style.display='inline-block'; label.style.display='block'; }
+    else { img.style.display='none'; label.style.display='none'; }
+
     const agendaQr = document.getElementById('agendaQrImg');
     const agendaLabel = document.getElementById('agendaQrLabel');
-    if(agendaLink){
-      agendaQr.src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(agendaLink);
-      agendaQr.style.display = 'inline-block';
-      agendaLabel.style.display = 'block';
-    }
+    if(agendaQrPhoto){ agendaQr.src = agendaQrPhoto; agendaQr.style.display='inline-block'; agendaLabel.style.display='block'; }
+    else { agendaQr.style.display='none'; agendaLabel.style.display='none'; }
+
     const instaQr = document.getElementById('instaQrImg');
     const instaLabel = document.getElementById('instaQrLabel');
-    if(instaLink){
-      instaQr.src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(instaLink);
-      instaQr.style.display = 'inline-block';
-      instaLabel.style.display = 'block';
-    }
+    if(instaQrPhoto){ instaQr.src = instaQrPhoto; instaQr.style.display='inline-block'; instaLabel.style.display='block'; }
+    else { instaQr.style.display='none'; instaLabel.style.display='none'; }
   }
-  document.getElementById('googleBtn').addEventListener('click', ()=> window.open(googleLink, '_blank'));
-  document.getElementById('instaBtn').addEventListener('click', ()=> window.open(instaLink, '_blank'));
-  document.getElementById('linkSave').addEventListener('click', ()=>{
-    googleLink = document.getElementById('linkInput').value.trim() || googleLink;
-    sSet('google-review-link', googleLink);
-    renderGoogle();
-    mostrarDebug();
+
+  document.getElementById('googleUploadBtn').addEventListener('click', ()=> document.getElementById('googleFileInput').click());
+  document.getElementById('googleFileInput').addEventListener('change', (e)=>{
+    const file = e.target.files[0]; if(!file) return;
+    compressImage(file, 700, 0.8, (dataUrl)=>{ googleQrPhoto = dataUrl; sSet('google-qr-foto', googleQrPhoto); renderGoogle(); });
   });
-  document.getElementById('instaSave').addEventListener('click', ()=>{
-    instaLink = document.getElementById('instaInput').value.trim() || instaLink;
-    sSet('instagram-link', instaLink);
-    renderGoogle();
-    mostrarDebug();
+  document.getElementById('googleRemoveBtn').addEventListener('click', ()=>{
+    googleQrPhoto = null; sSet('google-qr-foto', null); renderGoogle();
+  });
+
+  document.getElementById('agendaUploadBtn').addEventListener('click', ()=> document.getElementById('agendaFileInput').click());
+  document.getElementById('agendaFileInput').addEventListener('change', (e)=>{
+    const file = e.target.files[0]; if(!file) return;
+    compressImage(file, 700, 0.8, (dataUrl)=>{ agendaQrPhoto = dataUrl; sSet('agenda-qr-foto', agendaQrPhoto); renderGoogle(); });
+  });
+  document.getElementById('agendaRemoveBtn').addEventListener('click', ()=>{
+    agendaQrPhoto = null; sSet('agenda-qr-foto', null); renderGoogle();
+  });
+
+  document.getElementById('instaQrUploadBtn').addEventListener('click', ()=> document.getElementById('instaQrFileInput').click());
+  document.getElementById('instaQrFileInput').addEventListener('change', (e)=>{
+    const file = e.target.files[0]; if(!file) return;
+    compressImage(file, 700, 0.8, (dataUrl)=>{ instaQrPhoto = dataUrl; sSet('insta-qr-foto', instaQrPhoto); renderGoogle(); });
+  });
+  document.getElementById('instaQrRemoveBtn').addEventListener('click', ()=>{
+    instaQrPhoto = null; sSet('insta-qr-foto', null); renderGoogle();
   });
 
   // ---------- FOTO DO INSTAGRAM ----------
@@ -710,44 +716,27 @@
     sSet('instagram-foto', null);
     renderInstaPhoto();
   });
-  document.getElementById('agendaSave').addEventListener('click', ()=>{
-    agendaLink = document.getElementById('agendaInput').value.trim() || agendaLink;
-    sSet('agendamento-link', agendaLink);
-    renderGoogle();
-  });
 
   // ---------- INIT ----------
   (async function init(){
     galPhotos = await sGet('galeria-fotos', []);
     services = await sGet('servicos-lista', DEFAULT_SERVICES);
     feedbackEntries = await sGet('feedback-respostas', []);
-    googleLink = await sGet('google-review-link', googleLink);
-    instaLink = await sGet('instagram-link', instaLink);
-    agendaLink = await sGet('agendamento-link', agendaLink);
     bgPhoto = await sGet('foto-fundo', null);
     applyBg();
     pixQrPhoto = await sGet('pix-qr-foto', null);
     renderPix();
     instaPhoto = await sGet('instagram-foto', null);
     renderInstaPhoto();
+    googleQrPhoto = await sGet('google-qr-foto', null);
+    instaQrPhoto = await sGet('insta-qr-foto', null);
+    agendaQrPhoto = await sGet('agenda-qr-foto', null);
 
     renderChips(); renderGallery();
     renderServices();
     renderStars(); renderFbTags(); renderFeedbackResults();
     renderGoogle();
-    mostrarDebug();
   })();
-
-  function mostrarDebug(){
-    let box = document.getElementById('debugBox');
-    if(!box){
-      box = document.createElement('div');
-      box.id = 'debugBox';
-      box.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#ffef8a;color:#000;font-size:11px;padding:8px;z-index:999;font-family:monospace;word-break:break-all;border-bottom:2px solid #000;';
-      document.body.appendChild(box);
-    }
-    box.textContent = 'DEBUG google="' + localStorage.getItem('st-google-review-link') + '" | insta="' + localStorage.getItem('st-instagram-link') + '" | agenda="' + localStorage.getItem('st-agendamento-link') + '"';
-  }
 
 })();
 </script>
