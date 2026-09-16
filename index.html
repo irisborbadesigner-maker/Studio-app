@@ -675,13 +675,13 @@
     googleLink = document.getElementById('linkInput').value.trim() || googleLink;
     sSet('google-review-link', googleLink);
     renderGoogle();
-    alert('DEBUG: tentei salvar "' + googleLink + '". Valor agora no armazenamento: "' + localStorage.getItem('st-google-review-link') + '"');
+    mostrarDebug();
   });
   document.getElementById('instaSave').addEventListener('click', ()=>{
     instaLink = document.getElementById('instaInput').value.trim() || instaLink;
     sSet('instagram-link', instaLink);
     renderGoogle();
-    alert('DEBUG: tentei salvar "' + instaLink + '". Valor agora no armazenamento: "' + localStorage.getItem('st-instagram-link') + '"');
+    mostrarDebug();
   });
 
   // ---------- FOTO DO INSTAGRAM ----------
@@ -735,8 +735,19 @@
     renderServices();
     renderStars(); renderFbTags(); renderFeedbackResults();
     renderGoogle();
-    alert('DEBUG ao abrir: google="' + localStorage.getItem('st-google-review-link') + '" | insta="' + localStorage.getItem('st-instagram-link') + '"');
+    mostrarDebug();
   })();
+
+  function mostrarDebug(){
+    let box = document.getElementById('debugBox');
+    if(!box){
+      box = document.createElement('div');
+      box.id = 'debugBox';
+      box.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#ffef8a;color:#000;font-size:11px;padding:8px;z-index:999;font-family:monospace;word-break:break-all;border-bottom:2px solid #000;';
+      document.body.appendChild(box);
+    }
+    box.textContent = 'DEBUG google="' + localStorage.getItem('st-google-review-link') + '" | insta="' + localStorage.getItem('st-instagram-link') + '" | agenda="' + localStorage.getItem('st-agendamento-link') + '"';
+  }
 
 })();
 </script>
