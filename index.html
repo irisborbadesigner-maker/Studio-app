@@ -630,11 +630,13 @@
   document.getElementById('pixFileInput').addEventListener('change', (e)=>{
     const file = e.target.files[0];
     if(!file) return;
-    compressImage(file, 900, 0.7, (dataUrl)=>{
-      pixQrPhoto = dataUrl;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      pixQrPhoto = reader.result;
       sSet('pix-qr-foto', pixQrPhoto);
       renderPix();
-    });
+    };
+    reader.readAsDataURL(file);
   });
   document.getElementById('pixRemoveBtn').addEventListener('click', ()=>{
     pixQrPhoto = null;
@@ -673,11 +675,13 @@
     googleLink = document.getElementById('linkInput').value.trim() || googleLink;
     sSet('google-review-link', googleLink);
     renderGoogle();
+    alert('DEBUG: tentei salvar "' + googleLink + '". Valor agora no armazenamento: "' + localStorage.getItem('st-google-review-link') + '"');
   });
   document.getElementById('instaSave').addEventListener('click', ()=>{
     instaLink = document.getElementById('instaInput').value.trim() || instaLink;
     sSet('instagram-link', instaLink);
     renderGoogle();
+    alert('DEBUG: tentei salvar "' + instaLink + '". Valor agora no armazenamento: "' + localStorage.getItem('st-instagram-link') + '"');
   });
 
   // ---------- FOTO DO INSTAGRAM ----------
@@ -693,11 +697,13 @@
   document.getElementById('instaFileInput').addEventListener('change', (e)=>{
     const file = e.target.files[0];
     if(!file) return;
-    compressImage(file, 600, 0.7, (dataUrl)=>{
-      instaPhoto = dataUrl;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      instaPhoto = reader.result;
       sSet('instagram-foto', instaPhoto);
       renderInstaPhoto();
-    });
+    };
+    reader.readAsDataURL(file);
   });
   document.getElementById('instaRemoveBtn').addEventListener('click', ()=>{
     instaPhoto = null;
@@ -729,6 +735,7 @@
     renderServices();
     renderStars(); renderFbTags(); renderFeedbackResults();
     renderGoogle();
+    alert('DEBUG ao abrir: google="' + localStorage.getItem('st-google-review-link') + '" | insta="' + localStorage.getItem('st-instagram-link') + '"');
   })();
 
 })();
